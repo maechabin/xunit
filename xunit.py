@@ -3,10 +3,13 @@ class TestCase:
         self.name = name
     def setUp(self):
         pass
+    def tearDown(self):
+        pass
     def run(self):
         self.setUp()
         method = getattr(self, self.name)
         method()
+        self.tearDown()
 
 class WasRun(TestCase):
     def setUp(self):
@@ -15,6 +18,9 @@ class WasRun(TestCase):
     def testMethod(self):
         # テストメソッドの実行をログに記録する
         self.log = self.log + 'testMethod '
+    def tearDown(self):
+        # tearDownメソッドの実行をログに記録する
+        self.log = self.log + 'tearDown '
 
 class TestCaseTest(TestCase):
     # テストメソッド    
@@ -22,6 +28,6 @@ class TestCaseTest(TestCase):
         # WasRunのインスタンスを生成（Fixture）
         test = WasRun('testMethod')
         test.run()
-        assert('setUp testMethod ' == test.log)
+        assert('setUp testMethod tearDown ' == test.log)
 
 TestCaseTest('testTemplateMethod').run()
