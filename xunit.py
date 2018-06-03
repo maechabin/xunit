@@ -61,19 +61,22 @@ class TestCaseTest(TestCase):
     def testTemplateMethod(self):
         # WasRunのインスタンスを生成（Fixture）
         test = WasRun('testMethod')
-        test.run()
+        result = TestResult()
+        test.run(result)
         assert('setUp testMethod tearDown ' == test.log)
     # テスト結果を返すかテスト（成功時）
     def testResult(self):
         # WasRunのインスタンスを生成（Fixture）
         test = WasRun('testMethod')
-        result = test.run()
+        result = TestResult()
+        test.run(result)
         assert('1 run, 0 failed' == result.summary())
     # テスト結果を返すかテスト（失敗時）
     def testFailedResult(self):
         # WasRunのインスタンスを生成（Fixture）
         test = WasRun('testBrokenMethod')
-        result = test.run()
+        result = TestResult()
+        test.run(result)
         assert('1 run, 1 failed' == result.summary())
     # テストが失敗しても期待した内容がきちんと出力されるか
     def testFailedResultFormatting(self):
@@ -84,7 +87,7 @@ class TestCaseTest(TestCase):
         assert('1 run, 1 failed' == result.summary())
     # いくつかのテストを登録し、収集された実行結果を取得するテスト
     def testSuite(self):
-        suite = TestSuit()
+        suite = TestSuite()
         suite.add(WasRun('testMethod'))
         suite.add(WasRun('testBrokenMethod'))
         result = TestResult()
