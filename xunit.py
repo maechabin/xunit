@@ -34,6 +34,19 @@ class TestCase:
         self.tearDown()
         return result
 
+class TestSuite:
+    def __init__(self):
+        # テストリスト
+        self.tests = []
+    def add(self, test):
+        # テストをリストへ追加
+        self.tests.append(test)
+    def run(self):
+        result = TestResult()
+        for test in self.tests:
+            test.run(result)
+        return result
+
 class WasRun(TestCase):
     def setUp(self):
         # 呼び出されたメソッドを記録するログを保持する
