@@ -1,12 +1,17 @@
 class TestResult:
     def __init__(self):
-        # 0で初期化
+        # 実行した数を0で初期化
         self.runCount = 0
+        # 失敗の数を0で初期化
+        self.errorCount = 0
     def testStarted(self):
         # テスト実行ごとにインクリメント
         self.runCount = self.runCount + 1
+    def testFailed(self):
+        # テスト失敗ごとにインクリメント
+        self.errorCount = self.errorCount + 1
     def summary(self):
-        return '%d run, 0 failed' % self.runCount;
+        return '%d run, %d failed' % (self.runCount, self.errorCount);
 
 class TestCase:
     def __init__(self, name):
