@@ -20,9 +20,7 @@ class TestCase:
         pass
     def tearDown(self):
         pass
-    def run(self):
-        # TestResultのインスタンスを生成
-        result = TestResult()
+    def run(self, result):
         result.testStarted()
         self.setUp()
         try:
@@ -32,7 +30,6 @@ class TestCase:
         except:
             result.testFailed()
         self.tearDown()
-        return result
 
 class TestSuite:
     def __init__(self):
@@ -41,11 +38,9 @@ class TestSuite:
     def add(self, test):
         # テストをリストへ追加
         self.tests.append(test)
-    def run(self):
-        result = TestResult()
+    def run(self, result):
         for test in self.tests:
             test.run(result)
-        return result
 
 class WasRun(TestCase):
     def setUp(self):
@@ -92,7 +87,8 @@ class TestCaseTest(TestCase):
         suite = TestSuit()
         suite.add(WasRun('testMethod'))
         suite.add(WasRun('testBrokenMethod'))
-        result = suite.run()
+        result = TestResult()
+        suite.run(result)
         asssert('2 run 1 failed' == result.summary())
 
 print(TestCaseTest('testTemplateMethod').run().summary())
