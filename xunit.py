@@ -32,6 +32,9 @@ class WasRun(TestCase):
     def testMethod(self):
         # テストメソッドの実行をログに記録する
         self.log = self.log + 'testMethod '
+    def testBrokenMethod(self):
+        # 例外を投げる
+        raise Exception
     def tearDown(self):
         # tearDownメソッドの実行をログに記録する
         self.log = self.log + 'tearDown '
@@ -58,4 +61,4 @@ class TestCaseTest(TestCase):
 
 TestCaseTest('testTemplateMethod').run()
 TestCaseTest('testResult').run()
-TestCaseTest('testFailedResult').run()
+# TestCaseTest('testFailedResult').run()
