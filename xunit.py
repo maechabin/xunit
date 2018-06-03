@@ -74,8 +74,16 @@ class TestCaseTest(TestCase):
         result.testStarted()
         result.testFailed()
         assert('1 run, 1 failed' == result.summary())
+    # いくつかのテストを登録し、収集された実行結果を取得するテスト
+    def testSuite(self):
+        suite = TestSuit()
+        suite.add(WasRun('testMethod'))
+        suite.add(WasRun('testBrokenMethod'))
+        result = suite.run()
+        asssert('2 run 1 failed' == result.summary())
 
 print(TestCaseTest('testTemplateMethod').run().summary())
 print(TestCaseTest('testResult').run().summary())
 print(TestCaseTest('testFailedResult').run().summary())
 print(TestCaseTest('testFailedResultFormatting').run().summary())
+print(TestCaseTest('testSuite').run().summary)
