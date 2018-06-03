@@ -1,3 +1,7 @@
+class TestResult:
+    def summary(self):
+        return '1 run, 0 failed';
+
 class TestCase:
     def __init__(self, name):
         self.name = name
@@ -10,6 +14,7 @@ class TestCase:
         method = getattr(self, self.name)
         method()
         self.tearDown()
+        return TestResult()
 
 class WasRun(TestCase):
     def setUp(self):
@@ -23,11 +28,18 @@ class WasRun(TestCase):
         self.log = self.log + 'tearDown '
 
 class TestCaseTest(TestCase):
-    # テストメソッド    
+    # テストメソッドが実行されたかテスト
     def testTemplateMethod(self):
         # WasRunのインスタンスを生成（Fixture）
         test = WasRun('testMethod')
         test.run()
         assert('setUp testMethod tearDown ' == test.log)
+    # テスト結果を返すかテスト
+    def testResult(self):
+        # WasRunのインスタンスを生成（Fixture）
+        test = WasRun('testMethod')
+        result = test.run()
+        assert('1 run, 0 failed' == result.summary())
 
 TestCaseTest('testTemplateMethod').run()
+TestCaseTest('testResult').run()
